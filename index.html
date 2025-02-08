@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #f8bbd0, #ff80ab);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: #333;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 42px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #f50057;
+            transform: scale(1.1);
+        }
+
+        .response {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #d81b60;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 50px;
+            animation: floatFlowers 5s ease-in-out infinite;
+        }
+
+        @keyframes floatFlowers {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Will you be my Valentine?</h1>
+    <div class="button-container">
+        <button id="yes-button">Yes</button>
+        <button id="no-button">No</button>
+    </div>
+    <div class="response" id="response"></div>
+
+    <script>
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const responseDiv = document.getElementById('response');
+
+        let firstYes = true;
+        let noClickCount = 0;
+
+        const noResponses = [
+            "Not a valid option. Try again!",
+            "Shut up, you are stuck with me no matter what. Now say yes!",
+            "Come on, stop playing. Just say yes! 😊"
+        ];
+
+        yesButton.addEventListener('click', () => respond('yes'));
+        noButton.addEventListener('click', () => respond('no'));
+
+        function respond(answer) {
+            if (answer === 'no') {
+                responseDiv.innerHTML = noResponses[noClickCount % noResponses.length];
+                responseDiv.style.opacity = 1;
+                noClickCount++;
+            } else if (answer === 'yes') {
+                if (firstYes) {
+                    responseDiv.innerHTML = "So quickly? Try saying no once!";
+                    responseDiv.style.opacity = 1;
+                    firstYes = false;
+                } else {
+                    showThankYouMessage();
+                }
+            }
+        }
+
+        function showThankYouMessage() {
+            responseDiv.innerHTML = "You said yes! <br>Thank you for being my Valentine! 💖 You make my world beautiful! 🌸💋";
+            responseDiv.style.opacity = 1;
+            document.body.style.backgroundColor = '#ffc1e3';
+            createFlowersAndKisses();
+        }
+
+        function createFlowersAndKisses() {
+            for (let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.top = Math.random() * 100 + '%';
+                flower.innerHTML = i % 2 === 0 ? '🌸' : '💋';
+                document.body.appendChild(flower);
+            }
+        }
+    </script>
+</body>
+</html>
